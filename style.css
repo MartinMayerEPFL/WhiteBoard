@@ -1,0 +1,262 @@
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  transform-origin: 0 0;
+  position: relative;
+  touch-action: none;
+  background-color: #f0f0f0;
+   user-select: none;
+}
+
+#viewport .connections-layer,
+#viewport #whiteboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+}
+
+/* Whiteboard avec bandeau de titre */
+#whiteboard {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f0f0;
+  cursor: crosshair;
+  padding-top: 40px; /* espace pour le bandeau du titre */
+}
+
+/*---------Titre du whiteboard---------- */
+#whiteboard-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 25vh;
+  background: none;
+  border-radius: 30px;
+  box-shadow: 15px 15px 30px #bebebe,
+              -15px -15px 30px #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 30px;
+  box-sizing: border-box;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Titre éditable */
+#title-text {
+  font-size: 32px;
+  font-weight: bold;
+  outline: none;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Conteneur des boutons placé en bas à droite */
+.title-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+/* Boutons Import / Export */
+.title-button {
+  background: #e0e0e0;
+  border: none;
+  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.title-button:hover {
+  box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+}
+/*-----------Title end-----------*/
+
+
+/* Bloc de tâches */
+.block {
+  resize: none; /* on gère ça avec interact.js */
+  min-height: fit-content; /* ou min-height: auto; */
+  height: auto;
+  overflow: auto;
+  overflow: visible;
+  width: 400px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  cursor: move;
+  /*transition: transform 0.2s ease, border-color 0.2s ease;*/
+  transition: top 0.2s ease, left 0.2s ease, border-color 0.2s ease;
+}
+
+
+.block .title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+  padding: 4px 8px;
+  outline: none;
+  max-width: 90%;
+  display: inline-block;
+}
+
+
+/* Liste de tâches */
+.block .tasks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.block .tasks li {
+  padding: 4px 8px;
+  cursor: text;
+  /*display: inline-block;*/
+  max-width: 80%;
+}
+
+/* Bouton ajouter une tâche */
+.block .add-task {
+  margin-top: 6px;
+  font-size: 0.9em;
+  color: #007BFF;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Bloc sélectionné */
+.block.selected {
+  border-color: #007BFF;
+  transform: scale(1.03);
+  z-index: 10;
+}
+
+.block.dragging {
+  transition: none !important;
+}
+.resize-corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.2); /* ou une couleur discrète si tu veux la voir */
+}
+
+/* Conteneur de chaque tâche */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+/* Texte de la tâche */
+.task-text {
+  flex: 1;
+  margin-right: 8px;
+  outline: none;
+}
+
+/* Tâche terminée */
+.task-text.done {
+  color: green;
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
+/* Boutons d'action */
+.task-buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 4px;
+  padding: 2px;
+  /*z-index: 100;*/
+}
+
+.task-buttons .selected {
+  font-weight: bold;
+  /*z-index: 100;*/
+}
+
+/*Completion display */
+.completion-display {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 13px;
+  font-style: italic;
+  color: green;
+  pointer-events: none;
+  z-index: 5;
+}
+#connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5; /* Au-dessus des blocs mais en-dessous du titre */
+}
+
+
+.custom-link-button {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.custom-link-button:hover {
+  transform: rotate(90deg);
+}
+
+.custom-link-button svg {
+  stroke: teal;
+  fill: none;
+  width: 24px;
+  height: 24px;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.custom-link-button:hover svg {
+  fill: #0f766e;
+}
+
+.custom-link-button:active svg {
+  fill: #0d9488;
+  stroke: #99f6e4;
+  transition-duration: 0s;
+}
+
+.ghost-dragging {
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 9999;
+}
