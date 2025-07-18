@@ -179,7 +179,6 @@ body {
 .block-flag-button:hover {
   color: black;
 }
-
 .block.important {
   border: 2px solid red;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
