@@ -14,7 +14,10 @@ export function renderAllTasks(tasksContainer, completionDisplay, data) {
     text.classList.add('task-text');
     text.textContent = task.text;
     if (!task.done) text.contentEditable = true;
-    if (task.done) text.classList.add('done');
+    if (task.done) {
+      text.classList.add('done');        // ✔️ garde cette ligne
+      taskItem.classList.add('done');    // ✅ ajoute celle-ci
+    }
 
     const buttons = document.createElement('div');
     buttons.classList.add('task-buttons');

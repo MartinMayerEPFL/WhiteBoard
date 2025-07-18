@@ -35,6 +35,20 @@ export function createBlock(data = {}) {
   completionDisplay.classList.add('completion-display');
   block.appendChild(completionDisplay);
 
+  // Bouton de lîmportance du block
+  const flagButton = document.createElement('button');
+  flagButton.className = 'block-flag-button';
+  flagButton.title = 'Marquer comme important';
+  flagButton.textContent = '⚑'; // drapeau simple
+
+  flagButton.onclick = () => {
+    data.important = !data.important;
+    block.classList.toggle('important', data.important);
+    saveBlocks();
+  };
+  block.appendChild(flagButton);
+
+  // Coin de redimensionnement
   const resizeCorner = document.createElement('div');
   resizeCorner.className = 'resize-corner';
   block.appendChild(resizeCorner);
@@ -119,6 +133,10 @@ export function createBlock(data = {}) {
     block.dataset.info = JSON.stringify(data);
     window.drawConnections?.();
   });
+
+  if (data.important) {
+    block.classList.add('important');
+  }
 
   return block;
 }

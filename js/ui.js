@@ -39,9 +39,21 @@ exportBtn.onclick = () => {
   const data = localStorage.getItem('blocks');
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
+
+  // Récupérer le titre actuel du projet
+  const title = document.getElementById('title-text')?.textContent?.trim() || 'Projet';
+
+  // Générer une date au format JJ-MM-AAAA
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, '0');
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const yyyy = now.getFullYear();
+
+  const filename = `${title}_${dd}-${mm}-${yyyy}.json`;
+
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'arborescence.json';
+  a.download = filename;
   a.click();
 };
 buttonContainer.appendChild(exportBtn);
